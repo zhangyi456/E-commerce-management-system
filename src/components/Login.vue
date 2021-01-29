@@ -7,19 +7,19 @@
         <img src="../assets/logo.png" alt="" />
       </div>
       <!-- 登录表单 -->
-      <el-form :model="LoginForm"   ref="LoginFormRef" :rules="rules" label-width="0px" class="login_form" >
-         <!-- 用户名 -->
+      <el-form :model="LoginForm" ref="LoginFormRef" :rules="rules" label-width="0px" class="login_form">
+        <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input  v-model="LoginForm.username"   prefix-icon="iconfont icon-user"></el-input>
+          <el-input v-model="LoginForm.username" prefix-icon="iconfont icon-user"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input v-model="LoginForm.password"  prefix-icon="iconfont icon-3702mima" type="password"></el-input>
+          <el-input v-model="LoginForm.password" prefix-icon="iconfont icon-3702mima" type="password"></el-input>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="login" >登录</el-button>
-          <el-button type="info" @click='resetLoginForm'>重置</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
+          <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -31,39 +31,43 @@ export default {
   name: 'Login',
   data() {
     return {
-        LoginForm:{
-            username:'lisi',
-        password:'321321'
-        },
-        // <!-- rules-->实现表单的校验规则
-        rules: {
-          // 表单名字验证规则
-          username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-          ],
-          // 表单密码验证规则
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            {min: 6,max: 15,message: '密码长度在 6 到 15 个字符',trigger: 'blur',},
-          ],
-        }
-        
+      LoginForm: {
+        username: 'admin',
+        password: '123456'
+      },
+      // <!-- rules-->实现表单的校验规则
+      rules: {
+        // 表单名字验证规则
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+        ],
+        // 表单密码验证规则
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 15, message: '密码长度在 6 到 15 个字符', trigger: 'blur' }
+        ]
+      }
     }
   },
   methods: {
     // 重置表单的方法
-      resetLoginForm(){
-          this.$refs.LoginFormRef.resetFields();
-      },
+    resetLoginForm() {
+      this.$refs.LoginFormRef.resetFields()
+    },
     // 登陆验证的方法
-      login(){
-              this.$refs.LoginFormRef.validate( async valid =>{
-          if(!valid ) return
-         const {data:res} =  await this.$http.post('login',this.LoginForm)
-         console.log(res);
+    login() {
+      this.$refs.LoginFormRef.validate(async (valid) => {
+        if (!valid) return
+        // 这里用了解构赋值{ data:res}
+        const { data: res } = await this.$http.post('login', this.LoginForm)
+        if (res.meta.status !== 200) return this.$message.error('登陆失败');
+       this.$message.success('登录成功')
+       console.log(res);
+       window.sessionStorage.setItem('token',res.data.token)
+       this.$router.push('/home')
       })
-      } 
+    }
   }
 }
 </script>
@@ -100,15 +104,15 @@ export default {
     }
   }
 }
- .login_form {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
-  }
-  .btns {
-    display: flex;
-    justify-content: flex-end;
-  }
+.login_form {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+.btns {
+  display: flex;
+  justify-content: flex-end;
+}
 </style>
