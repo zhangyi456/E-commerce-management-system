@@ -18,7 +18,7 @@
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="btns">
-          <el-button type="primary" >登录</el-button>
+          <el-button type="primary" @click="login" >登录</el-button>
           <el-button type="info" @click='resetLoginForm'>重置</el-button>
         </el-form-item>
       </el-form>
@@ -35,11 +35,14 @@ export default {
             username:'lisi',
         password:'321321'
         },
+        // <!-- rules-->实现表单的校验规则
         rules: {
+          // 表单名字验证规则
           username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
             { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
           ],
+          // 表单密码验证规则
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
             {min: 6,max: 15,message: '密码长度在 6 到 15 个字符',trigger: 'blur',},
@@ -49,9 +52,18 @@ export default {
     }
   },
   methods: {
+    // 重置表单的方法
       resetLoginForm(){
           this.$refs.LoginFormRef.resetFields();
-      }
+      },
+    // 登陆验证的方法
+      login(){
+              this.$refs.LoginFormRef.validate( async valid =>{
+          if(!valid ) return
+         const {data:res} =  await this.$http.post('login',this.LoginForm)
+         console.log(res);
+      })
+      } 
   }
 }
 </script>
