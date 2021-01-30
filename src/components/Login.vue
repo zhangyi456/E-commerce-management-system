@@ -61,10 +61,12 @@ export default {
         if (!valid) return
         // 这里用了解构赋值{ data:res}
         const { data: res } = await this.$http.post('login', this.LoginForm)
+        // 这里要记得引入message组件
         if (res.meta.status !== 200) return this.$message.error('登陆失败');
        this.$message.success('登录成功')
-       console.log(res);
+    //  在客户端的sessionStorahe中去存储Token 准备登录的时候去向后端提交token验证登录
        window.sessionStorage.setItem('token',res.data.token)
+    //    通过编程式导航去跳转后台主页
        this.$router.push('/home')
       })
     }
