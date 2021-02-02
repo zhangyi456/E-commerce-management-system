@@ -171,8 +171,7 @@ export default {
         ]
       },
       editForm: { username: '', email: '', mobile: '' },
-      editFormRules: {
-        email: [
+      editFormRules: { email: [
           { required: true, message: '请输入邮箱', trigger: 'blur' },
           { validator: checkEmail, message: '邮箱格式不正确，请重新输入', trigger: 'blur' }
         ],

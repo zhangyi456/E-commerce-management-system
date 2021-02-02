@@ -3,7 +3,7 @@ import { Button } from 'element-ui'
 import { Form, FormItem } from 'element-ui'
 import { Input } from 'element-ui'
 import { Message } from 'element-ui'
-import { Container, Header, Aside, Main, Menu, Submenu, MenuItem, MenuItemGroup, Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox,Tag ,Tree,Select,Option} from 'element-ui'
+import { Container, Header, Aside, Main, Menu, Submenu, MenuItem, MenuItemGroup, Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox,Tag ,Tree,Select,Option,Cascader,Alert,Tabs,TabPane} from 'element-ui'
 
 // 这里挂载的是组件
 Vue.use(Button)
@@ -33,6 +33,10 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 // 这里挂载的是方法
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
