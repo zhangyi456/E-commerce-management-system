@@ -9,6 +9,16 @@ import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
 // 导入axios的包
 import axios from 'axios'
+//导入vue-quill-editor（富文本编辑器）
+import VueQuillEditor from 'vue-quill-editor'
+//导入vue-quill-editor的样式
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+//全局注册组件
+Vue.component('tree-table', TreeTable)
+//全局注册富文本组件
+Vue.use(VueQuillEditor)
 
 import TreeTable from 'vue-table-with-tree-grid'
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
@@ -33,6 +43,28 @@ Vue.prototype.$http = axios
 
 Vue.component('tree-table', TreeTable)
 Vue.config.productionTip = false
+// 时间过滤器
+Vue.filter('dataFormat', function (value, fmt) {
+  let getDate = new Date(value);
+  let o = {
+    'M+': getDate.getMonth() + 1,
+    'd+': getDate.getDate(),
+    'h+': getDate.getHours(),
+    'm+': getDate.getMinutes(),
+    's+': getDate.getSeconds(),
+    'q+': Math.floor((getDate.getMonth() + 3) / 3),
+    'S': getDate.getMilliseconds()
+  };
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+  }
+  for (let k in o) {
+    if (new RegExp('(' + k + ')').test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+    }
+  }
+  return fmt;
+});
 
 new Vue({
   // 挂在路由

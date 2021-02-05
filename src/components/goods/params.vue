@@ -279,22 +279,22 @@ export default {
         return false
       }
       // 用户输入了内容
-      const r = JSON.parse(JSON.stringify(row.attr_vals)).push(row.inputValue.trim())
-      //   row.attr_vals.push(row.inputValue.trim())
+      // const r = JSON.parse(JSON.stringify(row.attr_vals)).push(row.inputValue.trim())
+        row.attr_vals.push(row.inputValue.trim())
       row.inputValue = ''
       row.inputVisible = false
       // 发情请求，保存这次操作
-      const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
-        attr_name: row.attr_name,
-        attr_sel: row.attr_sel,
-        attr_vals: r.join(' ')
-      })
-      if (res.meta.status !== 200) {
-        return this.$message.error('添加参数项失败')
-      }
-      row.attr_vals.push(row.inputValue.trim())
-      this.$message.success('添加参数成功')
-      //   this.saveAttrVals(row)
+      // const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
+      //   attr_name: row.attr_name,
+      //   attr_sel: row.attr_sel,
+      //   attr_vals: r.join(' ')
+      // })
+      // if (res.meta.status !== 200) {
+      //   return this.$message.error('添加参数项失败')
+      // }
+      // row.attr_vals.push(row.inputValue.trim())
+      // this.$message.success('添加参数成功')
+        this.saveAttrVals(row)
     },
     // 将对 attr_vals 的操作，保存到数据库
     async saveAttrVals(row) {
